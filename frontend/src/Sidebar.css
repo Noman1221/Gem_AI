@@ -1,0 +1,212 @@
+.sidebar {
+    background-color:#1F1E1D;
+    color: #f4f3ee;
+    height: 100vh;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(177, 173, 161, 0.2);
+}
+
+button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    
+    background-color: transparent;
+    border: solid 0.1px rgba(177, 173, 161, 0.3);
+    cursor: pointer;
+    color: #f4f3ee;
+    transition: all 0.2s;
+}
+
+button:hover {
+    background-color: rgba(193, 95, 60, 0.15);
+    border-color: #c15f3c;
+}
+
+.logoDiv{
+display: flex;
+justify-content: center;
+  /* border: 1px solid #c15f3c; */
+}
+.logo1{
+  height: 32px;
+  width: 32px;
+
+   transform: scale(5);
+}
+button span {
+    font-size: 20px;
+    color: #f4f3ee;
+}
+
+.history {
+    flex: 1;
+    overflow-y: auto;
+    margin: 10px;
+    padding: 10px;
+    height: 100%;
+}
+
+/* Hide scrollbar but still allow scroll */
+.history::-webkit-scrollbar {
+    width: 6px;
+}
+
+.history::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.history::-webkit-scrollbar-thumb {
+    background: rgba(177, 173, 161, 0.3);
+    border-radius: 3px;
+}
+
+.history::-webkit-scrollbar-thumb:hover {
+    background: #b1ada1;
+}
+
+.history li {
+    list-style-type: none;
+    cursor: pointer;
+    padding: 8px 10px;
+    margin-bottom: 0.3rem;
+    font-size: 17px;
+    border: solid 1px transparent;
+    position: relative;
+    color: rgba(244, 243, 238, 0.8);
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.history li:hover {
+    background-color: rgba(193, 95, 60, 0.15);
+    color: #f4f3ee;
+    border-color: rgba(193, 95, 60, 0.2);
+}
+
+.sign {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px;
+    font-size: 14px;
+    text-align: center;
+    border-top: solid 1px rgba(177, 173, 161, 0.3);
+    color: rgba(244, 243, 238, 0.8);
+}
+
+.fa-trash {
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+    color: #b1ada1;
+    transition: all 0.2s;
+}
+
+.history li:hover .fa-trash {
+    opacity: 1;
+}
+
+.fa-trash:hover {
+    color: #c15f3c !important;
+    transform: scale(1.1);
+}
+
+.highlighted {
+    background-color: rgba(193, 95, 60, 0.2);
+    border: solid 1px rgba(193, 95, 60, 0.4) !important;
+    color: #f4f3ee;
+}
+
+
+.sidebar-logout-btn {
+    padding: 6px 12px;
+    background: linear-gradient(135deg, #c15f3c 0%, #a04d2f 100%);
+    color: #ffffff;
+    border: 1px solid rgba(193, 95, 60, 0.3);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.sidebar-logout-btn:hover {
+    background: linear-gradient(135deg, #a04d2f 0%, #8b4428 100%);
+    border-color: #c15f3c;
+    transform: translateY(-1px);
+}
+
+/* New chat button styling */
+.new-chat-btn {
+    background: linear-gradient(135deg, #c15f3c 0%, #a04d2f 100%);
+    border: 1px solid rgba(244, 243, 238, 0.2);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.new-chat-btn:hover {
+    background: linear-gradient(135deg, #a04d2f 0%, #c15f3c 100%);
+    box-shadow: 0 4px 8px rgba(193, 95, 60, 0.3);
+}
+
+/* Icons color */
+.sidebar i {
+    color: #b1ada1;
+}
+
+.sidebar button:hover i {
+    color: #f4f3ee;
+}
+
+/* Better contrast for text */
+.sidebar-content {
+    color: #f4f3ee;
+}
+
+/* Smooth animations */
+.history li,
+button,
+.sidebar-logout-btn {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Focus states for accessibility */
+button:focus-visible,
+.history li:focus-visible {
+    outline: 2px solid #c15f3c;
+    outline-offset: 2px;
+}
+
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 3px; /* small space between circle and name */
+}
+
+.user-circle {
+  width: 35px;
+  height: 35px;
+  background-color: #c15f3c; /* terracotta circle */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.username {
+  font-size: 16px;
+  color: #f4f3ee;
+  padding-left: 5px;
+}

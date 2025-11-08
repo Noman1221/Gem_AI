@@ -1,0 +1,212 @@
+/* ChatWindow.css - Color Palette: #c15f3c, #b1ada1, #f4f3ee, #ffffff */
+
+.chatWindow {
+    background-color: #262624 ;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+/* navbar */
+
+.navbar {
+    width: 100%;
+    display: flex;
+    max-height: 70px;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#262624;
+    border-bottom: 1px solid rgba(177, 173, 161, 0.3);
+}
+
+.navbar span {
+    margin: 1rem 2rem;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.upgradeDiv span button{
+    background: #c15f3c;
+}
+
+.barIconDiv {
+    margin: 1rem 2rem;
+    font-size: 1.3rem;
+}
+
+.barIcon {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.barIcon:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(193, 95, 60, 0.3);
+}
+
+/* chat input */
+.chatInput {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+    background-color: #262624;
+    border-top: 1px solid rgba(177, 173, 161, 0.2);
+}
+
+.inputBox {
+    width: 100%;
+    position: relative;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input {
+    width: 100%;
+    border: 1px solid rgba(177, 173, 161, 0.3);
+    background-color: #30302E;
+    color: #ffffff;
+    padding: 20px;
+    font-size: 1rem;
+    border-radius: 14px;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(177, 173, 161, 0.1);
+    transition: all 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #c15f3c;
+    box-shadow: 
+        0 4px 12px rgba(193, 95, 60, 0.1),
+        0 0 0 2px rgba(193, 95, 60, 0.2);
+}
+
+input::placeholder {
+    color: rgba(45, 45, 45, 0.4);
+}
+
+#submit {
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    font-size: 20px;
+    position: absolute;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b1ada1;
+    transition: all 0.2s;
+}
+
+#submit:hover {
+    color: #c15f3c;
+    transform: scale(1.1);
+}
+#submit i{
+    color: #c15f3c;
+}
+#submit i:hover {
+    color: #b1ada1;
+}
+
+.info {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    color: rgba(255, 255, 255, 0.678);
+}
+
+/* dropdown css */
+
+.dropDown {
+    position: absolute;
+    top: 4rem;
+    right: 4rem;
+    width: 150px;
+    background-color: rgb(41, 40, 40);
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    text-align: left;
+    z-index: 1000;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(177, 173, 161, 0.3);
+}
+
+.dropDownItem {
+    font-size: 0.9rem;
+    margin: 0.3rem 0rem;
+    padding: 0.5rem 0.2rem;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all 0.2s;
+    border-radius: 4px;
+}
+
+.dropDownItem:hover {
+    background-color: rgba(193, 95, 60, 0.1);
+    color: #c15f3c;
+}
+
+/* Chat messages area */
+.messages {
+    flex: 1;
+    width: 100%;
+    overflow-y: auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.message {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    word-wrap: break-word;
+}
+
+.message.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #c15f3c 0%, #a04d2f 100%);
+    color: #ffffff;
+}
+
+.message.assistant {
+    align-self: flex-start;
+    background-color: #ffffff;
+    color: #2d2d2d;
+    border: 1px solid rgba(177, 173, 161, 0.3);
+}
+
+/* Scrollbar */
+.messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages::-webkit-scrollbar-track {
+    background: #f4f3ee;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background: #b1ada1;
+    border-radius: 4px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+    background: #c15f3c;
+}

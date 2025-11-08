@@ -1,0 +1,19 @@
+*{
+    color: #ececec;
+    font-family:  Roboto , 'Open Sans' , 'Helvitaca Neue' , 'sans-sarif' ;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.app{
+      background-color: #212121;
+      display: flex;
+}
+
+*::selection {
+  background-color:  #3b82f6 !important; /* your GemAI accent color */
+  color: #ffffff !important;            /* white text for readability */     /* text color when selected */
+}
