@@ -1,51 +1,68 @@
 .chats {
-    max-width: 750px;
-    overflow-y: scroll;
-    padding: 8rem;
+  max-width: 750px;
+  height: calc(100vh - 200px); /* Add a fixed height */
+  overflow-y: auto; /* Change to auto so scrollbar only shows when needed */
+  padding: 2rem; /* Reduced padding */
+  padding-bottom: 4rem; /* Extra space at bottom */
+
+  scrollbar-width: thin; /* makes it slim */
+  scrollbar-color: #404040 transparent; /* thumb color + track color */
 }
 
-/* Hide scrollbar but still allow scroll */
 .chats::-webkit-scrollbar {
-    display: none; /* for Chrome, Safari, Edge */
+  width: 6px; /* Thin scrollbar width */
+}
+
+.chats::-webkit-scrollbar-track {
+  background: transparent; /* or #f1f1f1 for light background */
+}
+
+.chats::-webkit-scrollbar-thumb {
+  background-color: #000; /* Black scrollbar */
+  border-radius: 10px; /* Rounded edges */
+}
+
+.chats::-webkit-scrollbar-thumb:hover {
+  background-color: #333; /* Slightly lighter on hover */
 }
 
 .userDiv {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 0.9rem;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.9rem;
 }
 
 .assistantDiv {
-    text-align: left;
-    font-size: 0.9rem;
+  text-align: left;
+  font-size: 0.9rem;
 }
 
 .userMessage {
-    background: linear-gradient(135deg, #c15f3c 0%, #a04d2f 100%);
-    color: #ffffff;
-    padding: 8px 20px;
-   border-radius: 24% 8%;;
-    margin-left: 15rem;
-    margin-bottom: 8px;
-    max-width: 500px;
-    width: fit-content;
+  background: linear-gradient(135deg, #c15f3c 0%, #a04d2f 100%);
+  color: #ffffff;
+  padding: 8px 20px;
+  border-radius: 24% 8%;
+  margin-left: 15rem;
+  margin-bottom: 8px;
+  max-width: 500px;
+  width: fit-content;
 }
 
 .assistantMessage {
-    background-color: #262624;
-    color: #ffffff;
-    padding: 8px 20px;
-    border-radius: 12px;
-    margin-bottom: 8px;
-    max-width: 500px;
-    width: fit-content;
-    border: 1px solid rgba(177, 173, 161, 0.3);
+  background-color: #262624;
+  color: #ffffff;
+  padding: 8px 20px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  max-width: 500px;
+  width: fit-content;
+  border: 1px solid rgba(177, 173, 161, 0.3);
 }
 
 .hljs {
-    border-radius: 14px !important;
+  border-radius: 14px !important;
 }
 
 pre {
-    white-space: pre-wrap;
+  white-space: pre-wrap;
 }

@@ -5,6 +5,8 @@ import redisClient from "../DB/redis.js";
 import User from '../models/user.model.js';
 import { sendMail } from '../utils/emailService.js';
 dotenv.config();
+
+
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Generate JWT Token

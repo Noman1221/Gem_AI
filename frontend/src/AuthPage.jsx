@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './AuthPage.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
+
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 const AuthPage = ({ setUser, setToken }) => {
@@ -19,6 +20,10 @@ const AuthPage = ({ setUser, setToken }) => {
   });
 
   useEffect(() => {
+    if (!GOOGLE_CLIENT_ID) {
+      console.error("❌ Missing GOOGLE_CLIENT_ID. Check your .env file.");
+      return;
+    }
     // Load Google Identity Services script
     const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
@@ -58,7 +63,7 @@ const AuthPage = ({ setUser, setToken }) => {
     setError('');
 
     try {
-      const res = await fetch(`${API_URL}/auth/google`, {
+      const res = await fetch(`${API_URL}/api/auth/google`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

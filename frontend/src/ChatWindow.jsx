@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useContext, useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
 import Chat from "./Chat.jsx";
@@ -29,7 +30,7 @@ const ChatWindow = () => {
     }
     try {
       const response = await fetch(`${API}/api/chat`, options);
-      console.log("haram hai", response);
+      // console.log("haram hai", response);
 
 
       const res = await response.json()
@@ -79,9 +80,9 @@ const ChatWindow = () => {
       {
         isOpen &&
         <div className="dropDown">
-          <div className="dropDownItem"><i class="fa-solid fa-gear"></i> Settings</div>
-          {/* <div className="dropDownItem"><i class="fa-solid fa-caret-up"></i> Upgrade plan</div> */}
-          <div onClick={handleLogout} className="dropDownItem"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
+          <div className="dropDownItem"><i className="fa-solid fa-gear"></i> Settings</div>
+          {/* <div className="dropDownItem"><i className="fa-solid fa-caret-up"></i> Upgrade plan</div> */}
+          <div onClick={handleLogout} className="dropDownItem"><i className="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
         </div>
       }
       <Chat />
