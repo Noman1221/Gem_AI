@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import './AuthPage.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
+console.log("what comes here ", API_URL);
+
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -104,7 +106,9 @@ const AuthPage = ({ setUser, setToken }) => {
     setError('');
     setSuccess('');
 
+    console.log("And here", API_URL);
     try {
+
       const res = await fetch(`${API_URL}/api/auth/signup`, {
         method: 'POST',
         headers: {
@@ -118,7 +122,7 @@ const AuthPage = ({ setUser, setToken }) => {
       });
 
       const data = await res.json();
-      console.log(data);
+      console.log("dekhte hai", data);
 
       if (res.ok) {
         setSuccess(data.message);

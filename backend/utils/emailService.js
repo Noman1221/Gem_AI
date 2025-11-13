@@ -10,7 +10,7 @@ export const sendMail = async (email, subject, otp) => {
       html: `<h3>Your OTP is <strong>${otp}</strong></h3>`,
     });
 
-    console.log('Email sent:', data);
+    // console.log('Email sent:', data);
     return data;
   } catch (error) {
     console.error('Email error:', error);

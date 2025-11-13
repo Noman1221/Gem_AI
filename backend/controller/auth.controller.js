@@ -21,7 +21,6 @@ const generateToken = (userId) => {
 
 // sign up with email
 export const emailSignup = async (req, res) => {
-
   // Implementation for email signup
   if (!req.body || Object.keys(req.body).length === 0) {
     return res.status(400).json({ message: "Credentials required!" });
@@ -37,6 +36,7 @@ export const emailSignup = async (req, res) => {
   if (!gmailRegex.test(email)) {
     return res.status(400).json({ error: "Invalid Gmail address" });
   }
+
   try {
     // Check if user already exists
     let existingUser = await User.findOne({ email });
@@ -44,30 +44,32 @@ export const emailSignup = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Create new user
-    existingUser = await User.create({
-      name,
-      email,
-      password,
-      authProvider: 'local',
-    });
-
-
-    // otp generation
+    // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000);
 
-
-    await redisClient.set(`otp:${email}`, otp, {
-      ex: 60,   // expires in 60 seconds
-      nx: true, // only set if not exists (optional)
+    // Store OTP in Redis
+    await redisClient.set(`otp:${email}`, String(otp), {
+      EX: 300, // expires in 5 minutes
     });
 
-    console.log(' OTP stored in Upstash Redis');
+    // Store user details temporarily - store as plain object
+    const tempUserData = {
+      name: name,
+      email: email,
+      password: password // Store plain password, will be hashed on user creation
+    };
 
-    // send email
-    await sendMail(existingUser.email, "Verify your Email", `Your OTP code is ${otp}`);
 
-    res.status(201).json({ message: "user registered succesfully! we have sent a mail", user: existingUser });
+    await redisClient.set(`temp_user:${email}`, JSON.stringify(tempUserData), {
+      EX: 300, // expires in 5 minutes
+    });
+
+    // Send email
+    await sendMail(email, "Verify your Email", `Your OTP code is ${otp}`);
+
+    res.status(200).json({
+      message: "OTP sent to your email. Please verify to complete registration."
+    });
   } catch (error) {
     console.error("Email signup error:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -75,47 +77,77 @@ export const emailSignup = async (req, res) => {
 }
 
 export const verifyEmail = async (req, res) => {
-
   let { email, otp } = req.body;
-  console.log(email, otp);
 
   if (!email || !otp) {
-    return res.status(400).json({ message: "Email and otp are required!" })
-  }
-  // console.log("email and otp ", email, otp);
-
-  const existingOTP = await redisClient.get(`otp:${email}`);
-
-
-  // Convert to string for comparison
-  if (String(otp) !== String(existingOTP)) {
-    return res.status(401).json({ message: "Invalid OTP" });
+    return res.status(400).json({ message: "Email and OTP are required!" });
   }
 
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(401).json({ message: "User not Exists" })
+  try {
+    // Get OTP from Redis
+    const existingOTP = await redisClient.get(`otp:${email}`);
+
+    // Verify OTP
+    if (!existingOTP || String(otp) !== String(existingOTP)) {
+      return res.status(401).json({ message: "Invalid or expired OTP" });
+    }
+
+    // Get temporary user details from Redis
+    const tempUserData = await redisClient.get(`temp_user:${email}`);
+
+    if (!tempUserData) {
+      return res.status(400).json({ message: "Registration session expired. Please sign up again." });
+    }
+
+    // Parse user data
+    let userData;
+    try {
+      userData = tempUserData
+    } catch (parseError) {
+      console.error("Failed to parse temp user data:", parseError);
+      return res.status(500).json({ message: "Invalid session data. Please sign up again." });
+    }
+
+    const { name, email: userEmail, password } = userData;
+
+    // Verify all required fields are present
+    if (!name || !userEmail || !password) {
+      return res.status(400).json({ message: "Invalid registration data. Please sign up again." });
+    }
+
+    // NOW create the user in MongoDB (only after OTP verification)
+    // The password will be hashed by Mongoose pre-save hook
+    const user = await User.create({
+      name,
+      email: userEmail,
+      password,
+      authProvider: 'local',
+      emailVerified: true, // Set to true immediately since OTP is verified
+    });
+
+    // Clean up Redis
+    await redisClient.del(`otp:${email}`);
+    await redisClient.del(`temp_user:${email}`);
+
+    // Generate token
+    const token = generateToken(user._id);
+
+    // Return token + user info to frontend
+    res.status(201).json({
+      success: true,
+      message: "Registration successful",
+      token,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error("Email verification error:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
-
-  user.emailVerified = true;
-  await user.save();
-  const token = generateToken(user._id);
-
-
-  //  Return token + user info to frontend
-  res.status(200).json({
-    success: true,
-    message: "Login successful",
-    token, // your frontend will now get this
-    user: {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-    },
-  });
-
 }
-
 // login with email
 export const emailLogin = async (req, res) => {
   // Implementation for email login
