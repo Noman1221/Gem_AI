@@ -18,13 +18,13 @@ import chatRoutes from "./routes/chat.route.js";
 
 // Middleware to parse JSON bodies.
 app.use(express.json());
-// let frontend_origin = process.env.FRONTEND_URL;
-// app.use(cors({
-//   origin: frontend_origin,
-//   credentials: true,
-//   optionsSuccessStatus: 200
-// }));
-app.use(cors({ origin: 'http://localhost:5173' }));
+let frontend_origin = process.env.FRONTEND_URL;
+app.use(cors({
+    origin: frontend_origin,
+    credentials: true,
+    optionsSuccessStatus: 200
+}));
+// app.use(cors({ origin: 'http://localhost:5173' }));
 
 
 // Routes
