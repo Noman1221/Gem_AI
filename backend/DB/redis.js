@@ -1,42 +1,39 @@
 import { Redis } from '@upstash/redis';
 import 'dotenv/config';
 
-
-let redisClient;
+let redisClient = null;
 
 try {
-  // Check if Upstash credentials are available
-  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
-    console.log('🔵 Connecting to Upstash Redis...');
-    
-    redisClient = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    });
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-    // Test connection
-    redisClient.ping().then(() => {
-      console.log('Upstash Redis connected successfully');
-    }).catch((err) => {
-      console.error(' Upstash Redis connection failed:', err.message);
-    });
-
+  if (!url || !token) {
+    console.warn("⚠️ Upstash Redis credentials missing in .env");
   } else {
-    console.warn('Upstash Redis credentials not found');
-    
-  }} catch (error) {
-  console.error('❌ Redis initialization error:', error);
-  
+    console.log("🔵 Connecting to Upstash Redis...");
 
-  };
+    redisClient = new Redis({
+      url,
+      token,
+    });
+
+    // Run a proper test
+    const testConnection = async () => {
+      try {
+        await redisClient.set("health-check", "ok");
+        const result = await redisClient.get("health-check");
+
+        console.log("✅ Upstash Redis connected successfully:", result);
+      } catch (err) {
+        console.error("❌ Upstash Redis connection failed:", err.message);
+      }
+    };
+
+    testConnection();
+  }
+
+} catch (error) {
+  console.error("❌ Redis initialization error:", error.message);
+}
 
 export default redisClient;
-
-
-
-
-
-
-  
-
-
